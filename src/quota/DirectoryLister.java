@@ -5,7 +5,6 @@ import java.io.FilenameFilter;
 
 public class DirectoryLister {
     private File startingDirectory;
-    private long size = 0;
 
     public DirectoryLister(String startingDirectoryPath) {
         this.startingDirectory = new File(startingDirectoryPath);
@@ -21,7 +20,8 @@ public class DirectoryLister {
     }
 
     private long recursiveList(File file, String indent) {
-    	//Si file est un fichier
+/* MAUVAIS CODE ORIGINAL   	
+ * //Si file est un fichier
     	if(file.isFile()){
     		System.out.println(indent + file.getName());
     		size = file.length();
@@ -38,6 +38,7 @@ public class DirectoryLister {
     				return new File(current, name).isDirectory();
     			}
     		});
+    		
     		//Filtrer les fichiers seulement
     		String[] files = file.list(new FilenameFilter(){
     			@Override
@@ -45,6 +46,7 @@ public class DirectoryLister {
     				return new File(current, name).isFile();
     			}
     		});
+    		
     		//Récursivité pour afficher les sous répertoires
     		for(int i = 0; i < directories.length; i++){
     			this.recursiveList(new File(file, directories[i]), indent + '\t');
@@ -53,7 +55,18 @@ public class DirectoryLister {
     		for(int j = 0; j < files.length; j++){
     			size = size + this.recursiveList(new File(file, files[j]), indent + '\t');
     		}
+    	}*/
+    	Long size = new Long(0);
+    	if(file.isDirectory()){
+			System.out.println(indent + "+ " + file.getName());
+    		for(int i = 0; i < file.listFiles().length; i++){
+    			size = size + recursiveList(file.listFiles()[i], indent + '\t');
+    		}
     	}
-    	return size;
+    	else{
+    		size = file.length();
+    	}
+    	return size; 
     }
+   
 }
