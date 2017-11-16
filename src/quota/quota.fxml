@@ -17,7 +17,7 @@
                   <Insets top="15.0" />
                </StackPane.margin>
             </Label>
-            <Button fx:id="runButton" contentDisplay="BOTTOM" mnemonicParsing="false" text="Lancer" StackPane.alignment="BOTTOM_CENTER">
+            <Button fx:id="runButton" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#onRun" text="Lancer" StackPane.alignment="BOTTOM_CENTER">
                <StackPane.margin>
                   <Insets bottom="10.0" />
                </StackPane.margin>

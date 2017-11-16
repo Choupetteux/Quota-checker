@@ -64,6 +64,7 @@ public class DirectoryLister {
     		}
     	}
     	else{
+    		System.out.println(indent + file.getName());
     		size = file.length();
     	}
     	return size; 
