@@ -2,8 +2,9 @@ package quota;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Observable;
 
-public class DirectoryLister {
+public class DirectoryLister extends Observable {
     private File startingDirectory;
 
     public DirectoryLister(String startingDirectoryPath) {
@@ -11,7 +12,7 @@ public class DirectoryLister {
     }
 
     public Long list() {
-        return recursiveList(startingDirectory, "");
+        return recursiveList(startingDirectory, "",true);
     }
 
     public static void main(String[] args) {
@@ -19,8 +20,9 @@ public class DirectoryLister {
         System.out.println(lister.list() / (1024 * 1024) + " Mio");
     }
 
-    private long recursiveList(File file, String indent) {
-/* MAUVAIS CODE ORIGINAL   	
+    private long recursiveList(File file, String indent, boolean initial) {
+    	
+    	/* MAUVAIS CODE ORIGINAL   	
  * //Si file est un fichier
     	if(file.isFile()){
     		System.out.println(indent + file.getName());
@@ -51,7 +53,7 @@ public class DirectoryLister {
     		for(int i = 0; i < directories.length; i++){
     			this.recursiveList(new File(file, directories[i]), indent + '\t');
     		}
-    		//Afficher les fichiers dans ce répertoire
+    		//Afficher lObservablees fichiers dans ce répertoire
     		for(int j = 0; j < files.length; j++){
     			size = size + this.recursiveList(new File(file, files[j]), indent + '\t');
     		}
@@ -60,7 +62,12 @@ public class DirectoryLister {
     	if(file.isDirectory()){
 			System.out.println(indent + "+ " + file.getName());
     		for(int i = 0; i < file.listFiles().length; i++){
-    			size = size + recursiveList(file.listFiles()[i], indent + '\t');
+    			size = size + recursiveList(file.listFiles()[i], indent + '\t', false);
+    			if(initial){
+    				this.setChanged();
+        			this.notifyObservers(new ProgressEvent(size));
+        		
+    			}
     		}
     	}
     	else{
@@ -68,6 +75,8 @@ public class DirectoryLister {
     		size = file.length();
     	}
     	return size; 
+    
+    
     }
    
 }
