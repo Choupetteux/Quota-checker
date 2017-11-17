@@ -21,7 +21,7 @@ public class QuotaController {
 	
 	@FXML
 	public void onRun() throws InterruptedException, ExecutionException{
-		DirectoryLister dir = new DirectoryLister(System.getProperty("user.home"));
+		DirectoryLister dir = new DirectoryLister("/usr/share/icons");
 
 		this.progressLabel.setText("Traitement en cours...");
 		this.progressBar.setProgress(-1);
@@ -36,7 +36,8 @@ public class QuotaController {
 					@Override
 					public void run() {
 						progressLabel.setText((size / (1024 * 1024)) + " / 400 Mio");
-						progressBar.setProgress((size / (1024*1024)) / 400);
+						double progress = ((size.doubleValue() / (1024*1024)) / 400);
+						progressBar.setProgress(progress);
 						runButton.setDisable(false);
 					}
 				});
