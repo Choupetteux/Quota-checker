@@ -62,11 +62,11 @@ public class DirectoryLister extends Observable {
     	if(file.isDirectory()){
 			System.out.println(indent + "+ " + file.getName());
     		for(int i = 0; i < file.listFiles().length; i++){
-    			size = size + recursiveList(file.listFiles()[i], indent + '\t', false);
+    			Long taille = new Long(recursiveList(file.listFiles()[i], indent + '\t', false));
+    			size = size + taille;
     			if(initial){
     				this.setChanged();
-        			this.notifyObservers(new ProgressEvent(size, new FileItem(file.getName(), size.intValue() )));
-        		
+        			this.notifyObservers(new ProgressEvent(size, new FileItem(file.getName(), ( taille.intValue() / (1024*1024)) )));
     			}
     		}
     	}
@@ -78,5 +78,4 @@ public class DirectoryLister extends Observable {
     
     
     }
-   
 }

@@ -17,19 +17,16 @@
                   <Insets bottom="10.0" />
                </StackPane.margin>
             </Button>
+            <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" prefWidth="351.0" progress="0.0" StackPane.alignment="BOTTOM_CENTER">
+               <StackPane.margin>
+                  <Insets bottom="50.0" />
+               </StackPane.margin>
+            </ProgressBar>
             <Label fx:id="progressLabel" StackPane.alignment="BOTTOM_CENTER">
                <StackPane.margin>
                   <Insets bottom="50.0" />
                </StackPane.margin>
             </Label>
-            <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" prefWidth="351.0" progress="0.0" StackPane.alignment="BOTTOM_CENTER">
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
-               <padding>
-                  <Insets bottom="50.0" />
-               </padding>
-            </ProgressBar>
             <ListView fx:id="fileList" prefHeight="230.0" prefWidth="471.0" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
                   <Insets bottom="75.0" />

@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,7 +23,6 @@ public class QuotaController {
 	private ProgressBar progressBar;
     @FXML
     private ListView<FileItem> fileList;
-
 	
 	@FXML
 	public void onRun() throws InterruptedException, ExecutionException{
@@ -38,6 +38,7 @@ public class QuotaController {
 						progressLabel.setText((progr.totalSize / (1024*1024)) + " / 400 Mio");
 						double progress = ((progr.totalSize.doubleValue() / (1024*1024)) / 400);
 						progressBar.setProgress(progress);
+						fileList.getItems().add(progr.getFileItem());
 					}
 				});
 				
