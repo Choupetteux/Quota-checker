@@ -65,7 +65,7 @@ public class DirectoryLister extends Observable {
     			size = size + recursiveList(file.listFiles()[i], indent + '\t', false);
     			if(initial){
     				this.setChanged();
-        			this.notifyObservers(new ProgressEvent(size));
+        			this.notifyObservers(new ProgressEvent(size, new FileItem(file.getName(), size.intValue() )));
         		
     			}
     		}

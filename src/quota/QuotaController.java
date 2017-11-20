@@ -33,7 +33,7 @@ public class QuotaController {
 					@Override
 					public void run() {
 						progressLabel.setText((progr.totalSize / (1024*1024)) + " / 400 Mio");
-						double progress = ((progr.totalSize / (1024*1024)) / 400);
+						double progress = ((progr.totalSize.doubleValue() / (1024*1024)) / 400);
 						progressBar.setProgress(progress);
 					}
 				});
