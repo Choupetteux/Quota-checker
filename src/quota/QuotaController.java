@@ -1,4 +1,5 @@
 package quota;
+import java.util.Comparator;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
@@ -8,6 +9,7 @@ import java.util.concurrent.Future;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -63,8 +65,25 @@ public class QuotaController {
 						double progress = ((size.doubleValue() / (1024*1024)) / 400);
 						progressBar.setProgress(progress);
 						runButton.setDisable(false);
+						fileList.setItems(new SortedList<FileItem>(fileList.getItems(), new Comparator<FileItem>(){
+
+							@Override
+							public int compare(FileItem o1, FileItem o2) {
+								if(o1.getSize() < o2.getSize()){
+									return 1;
+								}
+								else if(o1.getSize() > o2.getSize()){
+									return -1;
+								}
+								else{
+
+									return 0;
+								}
+							}
+						}));
 					}
 				});
+				
 				
 			}
 		});
