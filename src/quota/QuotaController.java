@@ -23,9 +23,9 @@ public class QuotaController {
 	private Button runButton;
 	@FXML
 	private ProgressBar progressBar;
-    @FXML
-    private ListView<FileItem> fileList;
-	
+	@FXML
+	private ListView<FileItem> fileList;
+
 	@FXML
 	public void onRun() throws InterruptedException, ExecutionException{
 		DirectoryLister dir = new DirectoryLister("/usr/share/icons");
@@ -41,31 +41,8 @@ public class QuotaController {
 						double progress = ((progr.totalSize.doubleValue() / (1024*1024)) / 400);
 						progressBar.setProgress(progress);
 						fileList.getItems().add(progr.getFileItem());
-					}
-				});
-				
-			}
-		};
-		
-		dir.addObserver(obs);
-		this.progressLabel.setText("Traitement en cours...");
-		this.progressBar.setProgress(-1);
-		this.runButton.setDisable(true);
 
-		Main.backgroundPool.submit(new Runnable() {
-			@Override
-			public void run() {
-			
-				Long size = dir.list();
-				
-				Platform.runLater(new Runnable(){
-					@Override
-					public void run() {
-						progressLabel.setText((size / (1024 * 1024)) + " / 400 Mio");
-						double progress = ((size.doubleValue() / (1024*1024)) / 400);
-						progressBar.setProgress(progress);
-						runButton.setDisable(false);
-						fileList.setItems(new SortedList<FileItem>(fileList.getItems(), new Comparator<FileItem>(){
+						fileList.getItems().sort(new Comparator<FileItem>(){
 
 							@Override
 							public int compare(FileItem o1, FileItem o2) {
@@ -76,19 +53,42 @@ public class QuotaController {
 									return -1;
 								}
 								else{
-
 									return 0;
 								}
 							}
-						}));
+						});
 					}
 				});
-				
-				
+
+			}
+		};
+
+		dir.addObserver(obs);
+		this.progressLabel.setText("Traitement en cours...");
+		this.progressBar.setProgress(-1);
+		this.runButton.setDisable(true);
+
+		Main.backgroundPool.submit(new Runnable() {
+			@Override
+			public void run() {
+
+				Long size = dir.list();
+
+				Platform.runLater(new Runnable(){
+					@Override
+					public void run() {
+						progressLabel.setText((size / (1024 * 1024)) + " / 400 Mio");
+						double progress = ((size.doubleValue() / (1024*1024)) / 400);
+						progressBar.setProgress(progress);
+						runButton.setDisable(false);
+					}
+				});
+
+
 			}
 		});
-		
-		
+
+
 	}
-	
+
 }

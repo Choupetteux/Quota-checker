@@ -66,7 +66,8 @@ public class DirectoryLister extends Observable {
     			size = size + taille;
     			if(initial){
     				this.setChanged();
-        			this.notifyObservers(new ProgressEvent(size, new FileItem(file.getName(), ( taille.intValue() / (1024*1024)) )));
+    				//change name
+        			this.notifyObservers(new ProgressEvent(size, new FileItem(file.listFiles()[i].getName(), ( taille.intValue() / (1024*1024)) )));
     			}
     		}
     	}
